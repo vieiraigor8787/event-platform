@@ -1,7 +1,16 @@
 import { Header } from "../components/Header";
+import { Sidebar } from "../components/Sidebar";
+import { Video } from "../components/Video";
 
-export function Event(){
+export function Event() {
   return (
-    <Header />
-  )
+    <>
+    <div className="flex flex-col"></div>
+      <Header />
+      <main className="flex min-h-screen">
+        <Video />
+        <Sidebar />
+      </main>
+    </>
+  );
 }
