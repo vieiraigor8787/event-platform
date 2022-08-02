@@ -5,6 +5,7 @@ import {
   DiscordLogo,
   FileArrowDown,
   Lightning,
+  Spinner,
 } from "phosphor-react";
 
 import "@vime/core/themes/default.css";
@@ -28,7 +29,7 @@ type Teacher = {
   name: string;
   avatarURL: string;
   bio: string;
-}
+};
 
 interface GetLessonBySlugResponse {
   lesson: {
@@ -47,15 +48,23 @@ export function Video(props: VideoProps) {
   const { data } = useQuery(GET_LESSON_BY_SLUG_QUERY, {
     variables: {
       slug: props.lessonSlug,
-    }
+    },
   });
-  console.log(data)
+
+  if (!data) {
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <Spinner size={80} />
+      </div>
+    );
+  }
+
   return (
     <div className="flex-1">
       <div className="bg-black">
         <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
           <Player>
-            <Youtube videoId="KxNkjsowLpU" />
+            <Youtube videoId={data.lesson.videoId} />
             <DefaultUi />
           </Player>
         </div>
@@ -65,27 +74,24 @@ export function Video(props: VideoProps) {
         {/* bloco sobre aula */}
         <div className="flex items-start gap-16">
           <div className="flex-1">
-            <h1 className="text-2xl">Aula 01 - abertura ignite lab</h1>
+            <h1 className="text-2xl">{data.lesson.title}</h1>
             <p className="mt-4 text-gray-200 leading-relaxed">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto
-              nisi natus, dolore eligendi veritatis soluta magni nemo
-              consequuntur quaerat. Dicta dolores fuga provident inventore et
-              ipsam rerum reprehenderit doloribus excepturi!
+              {data.lesson.description}
             </p>
 
             {/* dados do professor */}
             <div className="flex items-center gap-4 mt-6">
               <img
-                src="https://github.com/vieiraigor8787.png"
+                src={data.lesson.teacher.avatarURL}
                 alt=""
                 className="h-16 w-16 rounded-full border-2 border-blue-500"
               />
               <div className="leading-relaxed">
                 <strong className="text-2xl block font-light">
-                  Igor Vieira
+                  {data.lesson.teacher.name}
                 </strong>
                 <span className="text-sm text-gray-200 block">
-                  Dev Front-End
+                  {data.lesson.teacher.bio}
                 </span>
               </div>
             </div>
