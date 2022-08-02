@@ -5,7 +5,7 @@ import { Video } from "../components/Video";
 
 export function Event() {
   const { slug } = useParams<{ slug: string }>();
-  console.log(slug)
+  
   return (
     <>
       <div className="flex flex-col"></div>
