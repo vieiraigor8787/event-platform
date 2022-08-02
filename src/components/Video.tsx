@@ -84,10 +84,10 @@ export function Video(props: VideoProps) {
               <img
                 src={data.lesson.teacher.avatarURL}
                 alt=""
-                className="h-16 w-16 rounded-full border-2 border-blue-500"
+                className="h-16 w-16 rounded-full border-2 border-blue-500 "
               />
               <div className="leading-relaxed">
-                <strong className="text-2xl block font-light">
+                <strong className="block">
                   {data.lesson.teacher.name}
                 </strong>
                 <span className="text-sm text-gray-200 block">
@@ -128,7 +128,7 @@ export function Video(props: VideoProps) {
               <FileArrowDown size={40} />
             </div>
             <div className="py-6 leading-relaxed">
-              <strong className="">Material complementar</strong>
+              <strong className="text-2xl font-light ">Material complementar</strong>
               <p className="text-sm text-gray-200 mt-2">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               </p>
@@ -146,7 +146,7 @@ export function Video(props: VideoProps) {
               <FileArrowDown size={40} />
             </div>
             <div className="py-6 leading-relaxed">
-              <strong className="text-2xl">wallpappers exclusivos</strong>
+              <strong className="text-2xl font-light ">Wallpappers exclusivos</strong>
               <p className="text-sm text-gray-200 mt-2">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               </p>
