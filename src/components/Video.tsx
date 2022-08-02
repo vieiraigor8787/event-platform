@@ -63,7 +63,7 @@ export function Video(props: VideoProps) {
     <div className="flex-1">
       <div className="bg-black">
         <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
-          <Player>
+          <Player key={data.lesson.videoId}>
             <Youtube videoId={data.lesson.videoId} />
             <DefaultUi />
           </Player>
@@ -128,7 +128,7 @@ export function Video(props: VideoProps) {
               <FileArrowDown size={40} />
             </div>
             <div className="py-6 leading-relaxed">
-              <strong className="text-2xl">Material complementar</strong>
+              <strong className="">Material complementar</strong>
               <p className="text-sm text-gray-200 mt-2">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               </p>
