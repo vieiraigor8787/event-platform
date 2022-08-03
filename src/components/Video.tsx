@@ -32,7 +32,7 @@ export function Video(props: VideoProps) {
   return (
     <div className="flex-1">
       <div className="bg-black">
-        <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
+        <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video mx-auto ">
           <Player key={data.lesson.videoId}>
             <Youtube videoId={data.lesson.videoId} />
             <DefaultUi />
