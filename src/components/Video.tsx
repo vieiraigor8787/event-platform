@@ -1,5 +1,4 @@
 import { DefaultUi, Player, Youtube } from "@vime/react";
-import { gql, useQuery } from "@apollo/client";
 import {
   CaretRight,
   DiscordLogo,
@@ -9,49 +8,20 @@ import {
 } from "phosphor-react";
 
 import "@vime/core/themes/default.css";
-
-const GET_LESSON_BY_SLUG_QUERY = gql`
-  query GetLessonBySlug($slug: String) {
-    lesson(where: { slug: $slug }) {
-      title
-      videoId
-      description
-      teacher {
-        avatarURL
-        bio
-        name
-      }
-    }
-  }
-`;
-
-type Teacher = {
-  name: string;
-  avatarURL: string;
-  bio: string;
-};
-
-interface GetLessonBySlugResponse {
-  lesson: {
-    title: string;
-    videoId: string;
-    description: string;
-    teacher: Teacher;
-  };
-}
+import { useGetLessonBySlugQuery } from "../graphql/generated";
 
 interface VideoProps {
   lessonSlug: string;
 }
 
 export function Video(props: VideoProps) {
-  const { data } = useQuery(GET_LESSON_BY_SLUG_QUERY, {
+  const { data } = useGetLessonBySlugQuery({
     variables: {
       slug: props.lessonSlug,
     },
   });
 
-  if (!data) {
+  if (!data || !data.lesson) {
     return (
       <div className="flex flex-1 items-center justify-center">
         <Spinner size={80} />
@@ -80,21 +50,21 @@ export function Video(props: VideoProps) {
             </p>
 
             {/* dados do professor */}
-            <div className="flex items-center gap-4 mt-6">
-              <img
-                src={data.lesson.teacher.avatarURL}
-                alt=""
-                className="h-16 w-16 rounded-full border-2 border-blue-500 "
-              />
-              <div className="leading-relaxed">
-                <strong className="block">
-                  {data.lesson.teacher.name}
-                </strong>
-                <span className="text-sm text-gray-200 block">
-                  {data.lesson.teacher.bio}
-                </span>
+            {data.lesson.teacher && (
+              <div className="flex items-center gap-4 mt-6">
+                <img
+                  src={data.lesson.teacher.avatarURL}
+                  alt=""
+                  className="h-16 w-16 rounded-full border-2 border-blue-500 "
+                />
+                <div className="leading-relaxed">
+                  <strong className="block">{data.lesson.teacher.name}</strong>
+                  <span className="text-sm text-gray-200 block">
+                    {data.lesson.teacher.bio}
+                  </span>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* botões*/}
@@ -128,7 +98,9 @@ export function Video(props: VideoProps) {
               <FileArrowDown size={40} />
             </div>
             <div className="py-6 leading-relaxed">
-              <strong className="text-2xl font-light ">Material complementar</strong>
+              <strong className="text-2xl font-light ">
+                Material complementar
+              </strong>
               <p className="text-sm text-gray-200 mt-2">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               </p>
@@ -146,7 +118,9 @@ export function Video(props: VideoProps) {
               <FileArrowDown size={40} />
             </div>
             <div className="py-6 leading-relaxed">
-              <strong className="text-2xl font-light ">Wallpappers exclusivos</strong>
+              <strong className="text-2xl font-light ">
+                Wallpappers exclusivos
+              </strong>
               <p className="text-sm text-gray-200 mt-2">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               </p>
